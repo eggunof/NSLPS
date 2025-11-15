@@ -8,5 +8,6 @@ class ResolveAxiomsIntoGoalResult:
     """
     Result of the command to resolve axioms into goal.
     """
+
     is_proven: bool
     steps: tuple[ProofStep]

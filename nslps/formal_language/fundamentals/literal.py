@@ -8,6 +8,7 @@ class Literal:
     """
     Represents a literal.
     """
+
     is_negative: bool
     predicate: str
     terms: tuple[Term]

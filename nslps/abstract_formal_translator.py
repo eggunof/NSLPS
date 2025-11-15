@@ -15,8 +15,8 @@ class AbstractFormalTranslator(ABC):
     ) -> ResolveAxiomsIntoGoalTask:
         """
         Translates natural language into command.
-        
-        :param statement: Natural language statement to translate 
+
+        :param statement: Natural language statement to translate
         :return: Command in formal language
         """
 
@@ -26,7 +26,7 @@ class AbstractFormalTranslator(ABC):
     ) -> ResolveAxiomsIntoGoalResponse:
         """
         Turns result of the command into a text in natural language.
-        
-        :param result: Result to translate 
+
+        :param result: Result to translate
         :return: Natural language text
         """

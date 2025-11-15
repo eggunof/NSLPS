@@ -6,4 +6,5 @@ class ResolveAxiomsIntoGoalRequest:
     """
     Request to resolve axioms into goal.
     """
+
     text: str
