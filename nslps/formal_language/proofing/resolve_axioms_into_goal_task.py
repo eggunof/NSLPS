@@ -8,5 +8,6 @@ class ResolveAxiomsIntoGoalTask:
     """
     Command to resolve axioms into goal.
     """
+
     axioms: list[FormalStatement]
     goal: FormalStatement

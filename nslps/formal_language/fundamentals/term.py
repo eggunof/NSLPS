@@ -7,6 +7,7 @@ class Term(ABC):
     """
     Represents a term: a constant or a variable.
     """
+
     name: str
 
     def __str__(self) -> str:

@@ -6,4 +6,5 @@ class ProofStep:
     """
     Represents a proof step.
     """
+
     action: str

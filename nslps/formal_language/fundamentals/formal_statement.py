@@ -12,7 +12,7 @@ class FormalStatement:
     def parse(cls, statement: str) -> Self:  # pylint: disable=unused-argument
         """
         Parses a formal statement.
-        
+
         :param statement: Statement to parse
         :return: Parsed formal statement
         """
