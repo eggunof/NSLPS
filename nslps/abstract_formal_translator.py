@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 from nslps.contracts import ResolveAxiomsIntoGoalRequest, ResolveAxiomsIntoGoalResponse
-from nslps.formal_language.proofing import ResolveAxiomsIntoGoalCommand, ResolveAxiomsIntoGoalResult
+from nslps.formal_language.proofing import ResolveAxiomsIntoGoalResult, ResolveAxiomsIntoGoalTask
 
 
 class AbstractFormalTranslator(ABC):
@@ -12,7 +12,7 @@ class AbstractFormalTranslator(ABC):
     @abstractmethod
     async def translate_natural_to_resolve_axioms_into_goal_command(
         self, statement: ResolveAxiomsIntoGoalRequest
-    ) -> ResolveAxiomsIntoGoalCommand:
+    ) -> ResolveAxiomsIntoGoalTask:
         """
         Translates natural language into command.
         

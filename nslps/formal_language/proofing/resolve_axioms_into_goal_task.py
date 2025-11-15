@@ -4,7 +4,7 @@ from nslps.formal_language.fundamentals import FormalStatement
 
 
 @dataclass(frozen=True)
-class ResolveAxiomsIntoGoalCommand:
+class ResolveAxiomsIntoGoalTask:
     """
     Command to resolve axioms into goal.
     """
