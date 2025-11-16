@@ -8,4 +8,4 @@ class ResolveAxiomsIntoGoalResponse:
     """
 
     is_proven: bool
-    steps: tuple[str]
+    steps: list[str]
