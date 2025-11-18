@@ -30,3 +30,8 @@ class FunctionType(TypeExpression):
 
     def __hash__(self) -> int:
         return hash((self.arg_types, self.result_type))
+
+    @property
+    def arity(self) -> int:
+        """Arity of the function type."""
+        return len(self.arg_types)
