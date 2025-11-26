@@ -8,6 +8,8 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "openrouter (>=0.0.19,<0.0.20)",
+    "dotenv (>=0.9.9,<0.10.0)"
 ]
 
 [build-system]

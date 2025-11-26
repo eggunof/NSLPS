@@ -1,9 +1,9 @@
 from .proof_step import ProofStep
-from .resolve_axioms_into_goal_result import ResolveAxiomsIntoGoalResult
-from .resolve_axioms_into_goal_task import ResolveAxiomsIntoGoalTask
+from .resolution_engine import ResolutionEngine
+from .resolution_result import ResolutionResult
 
 __all__ = (
     "ProofStep",
-    "ResolveAxiomsIntoGoalResult",
-    "ResolveAxiomsIntoGoalTask",
+    "ResolutionEngine",
+    "ResolutionResult",
 )

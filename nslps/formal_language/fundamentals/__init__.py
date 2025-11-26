@@ -1,13 +1,11 @@
-from nslps.formal_language.fundamentals.constant import Constant
-from nslps.formal_language.fundamentals.formal_statement import FormalStatement
+from nslps.formal_language.fundamentals.clause import Clause
 from nslps.formal_language.fundamentals.literal import Literal
+from nslps.formal_language.fundamentals.predicate import Predicate
 from nslps.formal_language.fundamentals.term import Term
-from nslps.formal_language.fundamentals.variable import Variable
 
 __all__ = (
-    "Constant",
-    "FormalStatement",
+    "Clause",
     "Literal",
     "Term",
-    "Variable",
+    "Predicate",
 )
