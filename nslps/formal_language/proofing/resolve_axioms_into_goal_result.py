@@ -10,4 +10,4 @@ class ResolveAxiomsIntoGoalResult:
     """
 
     is_proven: bool
-    steps: tuple[ProofStep]
+    steps: list[ProofStep]
