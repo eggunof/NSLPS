@@ -1,4 +1,7 @@
 from abc import ABC, abstractmethod
+from typing import TypeVar
+
+T_co = TypeVar("T_co", bound="TypeExpression", covariant=True)
 
 
 class TypeExpression(ABC):

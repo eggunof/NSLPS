@@ -1,19 +1,19 @@
 from dataclasses import dataclass
-from typing import final
+from typing import Generic, final
 
-from nslps.formal_language.fundamentals.types.type_expression import TypeExpression
+from nslps.formal_language.fundamentals.types.type_expression import T_co, TypeExpression
 
 
 @final
 @dataclass(frozen=True)
-class FunctionType(TypeExpression):
+class FunctionType(TypeExpression, Generic[T_co]):
     """
     Function type: from a tuple of argument types to a result type.
     Arity is the length of arg_types (n >= 1).
     """
 
     arg_types: tuple[TypeExpression, ...]  # Non-empty tuple
-    result_type: TypeExpression
+    result_type: T_co
 
     def __post_init__(self) -> None:
         if not self.arg_types:
