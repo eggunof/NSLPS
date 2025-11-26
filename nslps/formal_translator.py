@@ -40,7 +40,7 @@ class FormalTranslator(AbstractFormalTranslator):
                 headers={"Authorization": f"Bearer {self.api_key}"},
                 data=json.dumps(
                     {
-                        "model": "deepseek/deepseek-chat-v3-0324",
+                        "model": self.model,
                         "messages": [
                             {
                                 "role": "system",
@@ -76,7 +76,7 @@ class FormalTranslator(AbstractFormalTranslator):
                 headers={"Authorization": f"Bearer {self.api_key}"},
                 data=json.dumps(
                     {
-                        "model": "deepseek/deepseek-chat-v3-0324",
+                        "model": self.model,
                         "messages": [
                             {
                                 "role": "system",
