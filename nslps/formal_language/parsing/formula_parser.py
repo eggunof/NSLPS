@@ -50,7 +50,7 @@ class FormulaParser:
             literal_str = literal_str[1:]
 
         # Find predicate name and arguments within parentheses
-        match = re.match(r"([A-Za-zА-Яа-я]+)\((.*)\)", literal_str)
+        match = re.match(r"([A-Za-zА-Яа-я_]+)\((.*)\)", literal_str)
         if not match:
             raise FormulaParserException(f"Invalid predicate format: {literal_str}")
 
