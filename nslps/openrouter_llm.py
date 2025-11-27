@@ -6,11 +6,12 @@ from typing import cast
 
 from dotenv import load_dotenv
 from openrouter import OpenRouter
-from openrouter.errors import OpenRouterError
+from openrouter.errors import ChatError
 
 from nslps.formal_language.fundamentals import Clause
 from nslps.formal_language.parsing.formula_parser import FormulaParser
 from nslps.formal_language.proofing import ResolutionResult
+from nslps.llm_exception import LLMException
 from nslps.llm_provider import LLMProvider
 
 load_dotenv()
@@ -106,6 +107,6 @@ class OpenRouterLLM(LLMProvider):
             with OpenRouter(api_key=self.api_key) as client:
                 response = client.chat.send(model=self.model, messages=messages)
                 return cast(str, response.choices[0].message.content)
-        except OpenRouterError as e:
+        except ChatError as e:
             logger.error("OpenRouter error: %s", e)
-            raise
+            raise LLMException() from e
