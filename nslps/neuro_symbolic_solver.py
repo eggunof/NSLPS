@@ -24,7 +24,7 @@ class NeuroSymbolicSolver:
         # Phase 1: Formalization (Neuro)
         logger.debug("--- Phase 1: Formalization ---")
         axioms, goal = await self.llm.formalize(user_text)
-        logger.info("Knowledge Base:")
+        logger.info("Axioms:")
         for axiom in axioms:
             logger.info("  - %s", axiom)
         logger.info("Goal to prove: %s", goal)

@@ -16,12 +16,15 @@ def main() -> None:
 
     solver = NeuroSymbolicSolver(llm_service, resolution_engine)
 
-    input_text = input("Введите задачу: ")
-    try:
-        response = asyncio.run(solver.process_query(input_text))
-        print(response)
-    except ApplicationException as e:
-        print(e)
+    while True:
+        input_text = input("Введите задачу: ")
+        if input_text == "exit":
+            break
+        try:
+            response = asyncio.run(solver.process_query(input_text))
+            print(response)
+        except ApplicationException as e:
+            print(e)
 
 
 if __name__ == "__main__":
