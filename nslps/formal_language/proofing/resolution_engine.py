@@ -22,31 +22,30 @@ class ResolutionEngine:
         negated_goal_literals = [l.negation for l in goal.literals]
 
         # Each literal in negated goal becomes a separate unit clause
-        clauses = list(knowledge_base)
         proof_log: list[ProofStep] = []
 
         # Initial population of proof log
-        for i, c in enumerate(clauses):
-            proof_log.append(ProofStep(i, f"Axiom: {c}", c))
+        for i, axiom in enumerate(knowledge_base):
+            proof_log.append(ProofStep(i, f"Axiom: {axiom}", axiom))
 
-        start_idx = len(clauses)
+        start_idx = len(knowledge_base)
         for i, l in enumerate(negated_goal_literals):
-            c = Clause([l])
-            clauses.append(c)
-            proof_log.append(ProofStep(start_idx + i, f"Negated Goal: {c}", c))
+            axiom = Clause([l])
+            knowledge_base.append(axiom)
+            proof_log.append(ProofStep(start_idx + i, f"Negated Goal: {axiom}", axiom))
 
         new_clauses_generated = True
-        step_counter = len(clauses)
+        step_counter = len(knowledge_base)
 
         while new_clauses_generated:
             new_clauses_generated = False
-            n = len(clauses)
+            n = len(knowledge_base)
 
-            # Try to resolve every pair of clauses
+            # Try to resolve every pair of axioms
             for i in range(n):
                 for j in range(i + 1, n):
-                    c1 = clauses[i]
-                    c2 = clauses[j]
+                    c1 = knowledge_base[i]
+                    c2 = knowledge_base[j]
 
                     resolvents = self._resolve(c1, c2)
 
@@ -61,8 +60,8 @@ class ResolutionEngine:
                             return ResolutionResult(is_proven=True, proof_log=proof_log)
 
                         # Check redundancy (simplified)
-                        if not self._is_redundant(res, clauses):
-                            clauses.append(res)
+                        if not self._is_redundant(res, knowledge_base):
+                            knowledge_base.append(res)
                             proof_log.append(
                                 ProofStep(
                                     step_counter, f"Resolution between {i} and {j}", res, [i, j]

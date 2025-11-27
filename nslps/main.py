@@ -1,24 +1,24 @@
 import asyncio
+import logging
 
 from nslps.formal_language.proofing import ResolutionEngine
-from nslps.mock_llm import MockLLM
 from nslps.neuro_symbolic_solver import NeuroSymbolicSolver
+from nslps.openrouter_llm import OpenRouterLLM
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 
 
 def main() -> None:
     """Main"""
-    llm_service = MockLLM()
+    llm_service = OpenRouterLLM()
     resolution_engine = ResolutionEngine()
 
     solver = NeuroSymbolicSolver(llm_service, resolution_engine)
 
-    # Example Scenario
-    input_text = "Socrates is a man. All men are mortal. Prove Socrates is mortal."
-
-    print(f"User Query: {input_text}\n")
+    input_text = input("Введите задачу: ")
     response = asyncio.run(solver.process_query(input_text))
-
-    print("\n--- Final Output ---")
     print(response)
 
 

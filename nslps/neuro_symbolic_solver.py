@@ -1,6 +1,9 @@
-from nslps.formal_language.fundamentals import Clause
+import logging
+
 from nslps.formal_language.proofing import ResolutionEngine
 from nslps.llm_provider import LLMProvider
+
+logger = logging.getLogger(__name__)
 
 
 class NeuroSymbolicSolver:
@@ -19,29 +22,28 @@ class NeuroSymbolicSolver:
         Text → Logic → Proof → Explanation → Text
         """
         # Phase 1: Formalization (Neuro)
-        print("--- Phase 1: Formalization ---")
-        kb, goal = await self.llm.formalize(user_text)
-        self._print_formalization(kb, goal)
+        logger.debug("--- Phase 1: Formalization ---")
+        axioms, goal = await self.llm.formalize(user_text)
+        logger.info("Knowledge Base:")
+        for axiom in axioms:
+            logger.info("  - %s", axiom)
+        logger.info("Goal to prove: %s", goal)
 
         # Phase 2: Reasoning (Symbolic)
-        print("\n--- Phase 2: Symbolic Reasoning ---")
-        result = self.engine.solve(kb, goal)
+        logger.debug("--- Phase 2: Symbolic Reasoning ---")
+        result = self.engine.solve(axioms, goal)
+        logger.debug(
+            "Proof Log: %s",
+            [str(step) for step in result.proof_log],
+        )
 
         if result.is_proven:
-            print("Status: PROVEN ✅")
+            logger.info("Status: PROVEN")
         else:
-            print("Status: NOT PROVEN ❌")
-            return "Could not prove the statement."
+            logger.info("Status: NOT PROVEN")
 
         # Phase 3: Explanation (Neuro)
-        print("\n--- Phase 3: Natural Language Explanation ---")
+        logger.debug("--- Phase 3: Natural Language Explanation ---")
         final_answer = await self.llm.explain(result)
 
         return final_answer
-
-    @staticmethod
-    def _print_formalization(kb: list[Clause], goal: Clause) -> None:
-        print("Knowledge Base:")
-        for c in kb:
-            print(f"  - {c}")
-        print(f"Goal to prove: {goal}")

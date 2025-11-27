@@ -1,7 +1,10 @@
+import logging
 import re
 
 from nslps.formal_language.fundamentals import Clause, Literal, Predicate, Term
 from nslps.formal_language.parsing.formula_parser_exception import FormulaParserException
+
+logger = logging.getLogger(__name__)
 
 
 class FormulaParser:
@@ -11,46 +14,32 @@ class FormulaParser:
     """
 
     @staticmethod
-    def parse_clauses_from_raw_string(statements: list[str]) -> list[Clause]:
+    def parse_clause(statement: str) -> Clause:
         """
         Parses a raw string of comma-separated logical statements into a list of Clauses.
         Handles both unit clauses (facts) and complex clauses (rules using ∨).
         Example input: "Human(Socrates), ¬Human(x) ∨ Mortal(x)"
         """
-        clauses: list[Clause] = []
 
-        # Split by comma to get individual statements (which might be complex clauses)
-        for statement in statements:
-            if not statement:
-                continue
+        if not statement:
+            raise FormulaParserException("Empty statement provided for parsing.")
 
-            # If the statement contains '∨', it's a non-unit clause (rule)
-            if "∨" in statement:
-                literal_strs = [l.strip() for l in statement.split("∨")]
-            else:
-                # Otherwise, it's a unit clause (fact or goal)
-                literal_strs = [statement]
+        literal_strs = [l.strip() for l in statement.split("∨")]
 
-            literals: list[Literal] = []
-            for lit_str in literal_strs:
-                try:
-                    literals.append(FormulaParser._parse_literal_string(lit_str))
-                except FormulaParserException as e:
-                    print(f"Parsing error for literal '{lit_str}': {e}")
-                    continue
+        literals: list[Literal] = []
+        for literal_str in literal_strs:
+            try:
+                literals.append(FormulaParser._parse_literal_string(literal_str))
+            except FormulaParserException as e:
+                logger.error(
+                    "Parsing error for literal '%s' in statement '%s': %s",
+                    literal_str,
+                    statement,
+                    e,
+                )
+                raise
 
-            if literals:
-                clauses.append(Clause(literals))
-
-        return clauses
-
-    @staticmethod
-    def _parse_term(term_str: str) -> Term:
-        """Determines if a string is a variable or a constant."""
-        # Simple rule: if starts with lowercase letter, it's a variable (e.g., 'x').
-        # Otherwise, it's a constant (e.g., 'Socrates').
-        is_variable = term_str.islower() and term_str.isalpha()
-        return Term(term_str, is_variable)
+        return Clause(literals)
 
     @staticmethod
     def _parse_literal_string(literal_str: str) -> Literal:
@@ -70,10 +59,17 @@ class FormulaParser:
 
         arguments: list[Term] = []
         if args_str:
-            # Arguments are comma-separated
             for arg_name in [a.strip() for a in args_str.split(",")]:
                 if arg_name:
                     arguments.append(FormulaParser._parse_term(arg_name))
 
         predicate = Predicate(predicate_name, arguments)
         return Literal(predicate, is_negated)
+
+    @staticmethod
+    def _parse_term(term_str: str) -> Term:
+        """Determines if a string is a variable or a constant."""
+        # Simple rule: if starts with lowercase letter, it's a variable (e.g., 'x').
+        # Otherwise, it's a constant (e.g., 'Socrates').
+        is_variable = term_str.islower() and term_str.isalpha()
+        return Term(term_str, is_variable)
